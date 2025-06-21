@@ -99,7 +99,13 @@
                 X
             </p>
         </div>
-
+        <script>
+            document.querySelector('body').onload = () => {
+                if (!localStorage.getItem('Users') || !sessionStorage.getItem('CurrentUser')) {
+                    localStorage.setItem('Users', JSON.stringify([]))
+                }
+            }
+        </script>
         <script src="js/entities.js"></script>
         <script src="js/main.js"></script>
     </body>

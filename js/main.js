@@ -136,11 +136,10 @@ let pic = document.getElementById('profile-pic2')
 userEntry.onchange = (e) => {
     let Users = JSON.parse(localStorage.getItem('Users'))
     
+    let user = Users.find(user => user.username == e.target.value)
+    if (user) pic.src = user.profilePic
 
-    pic.src = Users.filter((item) => {return item.username == e.target.value})[0].profilePic
-
-    console.log(Users.map((item)=>{return item.username}), e.target.value)
-    console.log(Users.filter((item) => { return item.username == e.target.value }))
+    console.log(Users.map(item => item.username), e.target.value)
 }
 
 
@@ -154,29 +153,31 @@ loginForm.onsubmit = (e) => {
 
     let Users = JSON.parse(localStorage.getItem('Users'))
     console.log(Users)
-    let answer = Users.some((item) => {
-        if (item.name != details[0]) {
-            return "Name is invalid"
-        } else if(item.username != details[1]){
-            return "Username is invalid"
-        } else if (item.password != details[2]) {
-            return "Password is invalid"
-        }
 
-        return "Log In Successful"
-    })
-
-    alert(answer)
-
-    currentUser = Users.find((item) => {
-        return item.name == details[0] && item.username == details[1] && item.password == details[2]
-    })
-
-    console.log(currentUser)
-
-    currentUser = new newSession(currentUser)
-    console.log(currentUser)
-    sessionStorage.setItem('CurrentUser', JSON.stringify(currentUser))
+    if(Users = []) return alert("User does not exist")
     
-    location.href = './profile.html'
+    const [name, username, password] = details
+
+    Users.forEach(user => {
+        if(user.name == name || user.username == username ){
+            if (user.name !== name) return alert ("Name does not match")
+            if (user.username !== username) return alert ("Username does not match")
+            if (user.password !== password) return alert ("Password is incorrect")
+
+            alert("Log In Successful")
+
+            currentUser = Users.find((user) => user.name == name && user.username == username && user.password == password)
+
+            console.log(currentUser)
+
+            currentUser = new newSession(currentUser)
+            console.log(currentUser)
+            sessionStorage.setItem('CurrentUser', JSON.stringify(currentUser))
+            
+            location.href = './profile.html'
+        } else{
+            alert ("User does not exist")
+        }
+        
+    });
 }
