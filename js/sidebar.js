@@ -83,7 +83,7 @@ document.querySelector('body').onload = () => {
         let level = document.querySelector('.profile-area-container .level')
         let noOfTests = document.querySelector('.profile-area-container .tests-taken')
 
-        if (currentUser.Tests == [] || currentUser == null) {
+        if (currentUser.Tests.length == 0 || currentUser == null) {
             return
         }
 

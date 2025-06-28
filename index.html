@@ -104,6 +104,7 @@
                 if (!localStorage.getItem('Users') || !sessionStorage.getItem('CurrentUser')) {
                     localStorage.setItem('Users', JSON.stringify([]))
                 }
+                console.log(JSON.parse(localStorage.getItem('Users')))
             }
         </script>
         <script src="js/entities.js"></script>

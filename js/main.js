@@ -89,8 +89,11 @@ signUpForm.onsubmit = (e) => {
 
         sessionStorage.setItem('CurrentUser', JSON.stringify(currentUser))
         let Users = JSON.parse(localStorage.getItem('Users'))
+        
+        console.log(Users)
         Users.push(currentUser)
         localStorage.setItem('Users', JSON.stringify(Users))
+        console.log(Users)
     }
 
 
@@ -104,11 +107,9 @@ signUpForm.onsubmit = (e) => {
 
     if (details.some(nullPass)) {
 
-        if(!localStorage.getItem("User")){
-            localStorage.setItem("Users", JSON.stringify([]))
-        }
-
         let Users = JSON.parse(localStorage.getItem('Users'))
+
+        if(Users == null) localStorage.setItem('Users', '[]'), Users = JSON.parse(localStorage.getItem('Users'))
 
         let usedUserNames = Users.map((item) => {
             return item.username
@@ -118,6 +119,7 @@ signUpForm.onsubmit = (e) => {
             alert('User name already exists')
         } else {
             profileCreation()
+            console.log('User created')
 
             //Test begins
             location.href = './quiz.html'
@@ -151,10 +153,11 @@ loginForm.onsubmit = (e) => {
     let details = document.querySelectorAll('.login-form input')
     details = [...details].map(item => item.value)
 
-    let Users = JSON.parse(localStorage.getItem('Users'))
-    console.log(Users)
+    let Users = localStorage.getItem('Users')
 
-    if(Users = []) return alert("User does not exist")
+    if(Users == '[]') return alert("User does not exist")
+    
+    Users = JSON.parse(Users)
     
     const [name, username, password] = details
 
